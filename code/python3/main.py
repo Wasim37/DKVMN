@@ -150,14 +150,35 @@ def test_one_dataset(params, file_name, test_q_data, test_qa_data, best_epoch):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Script to test KVMN.')
-    parser.add_argument('--gpus', type=str, default='0', help='the gpus will be used, e.g "0,1,2,3"')
-    parser.add_argument('--max_iter', type=int, default=50, help='number of iterations')
+    #parser.add_argument('--gpus', type=str, default='0', help='the gpus will be used, e.g "0,1,2,3"')
+    parser.add_argument('--gpus', type=str, default=None, help='the gpus will be used, e.g "0,1,2,3"')
+    parser.add_argument('--max_iter', type=int, default=1, help='number of iterations')
     parser.add_argument('--test', type=bool, default=False, help='enable testing')
     parser.add_argument('--train_test', type=bool, default=True, help='enable testing')
     parser.add_argument('--show', type=bool, default=True, help='print progress')
 
-    dataset = "assist2009_updated"  # synthetic / assist2009_updated / assist2015 / KDDal0506 / STATICS
+    dataset = "assist2009_updated"  # synthetic / assist2009_updated / assist2015 / KDDal0506 / STATICS /tea_correct
 
+    if dataset == "tea_correct":
+        parser.add_argument('--batch_size', type=int, default=2, help='the batch size') # 
+        parser.add_argument('--q_embed_dim', type=int, default=50, help='question embedding dimensions')
+        parser.add_argument('--qa_embed_dim', type=int, default=200, help='answer and question embedding dimensions')
+        parser.add_argument('--memory_size', type=int, default=20, help='memory size')
+
+        parser.add_argument('--init_std', type=float, default=0.1, help='weight initialization std')
+        parser.add_argument('--init_lr', type=float, default=0.05, help='initial learning rate')
+        parser.add_argument('--final_lr', type=float, default=1E-5, help='learning rate will not decrease after hitting this threshold')
+        parser.add_argument('--momentum', type=float, default=0.9, help='momentum rate')
+        parser.add_argument('--maxgradnorm', type=float, default=50.0, help='maximum gradient norm')
+        parser.add_argument('--final_fc_dim', type=float, default=50, help='hidden state dim for final fc layer')
+
+        parser.add_argument('--n_question', type=int, default=110, help='the number of unique questions in the dataset')
+        parser.add_argument('--seqlen', type=int, default=200, help='the allowed maximum length of a sequence')
+        parser.add_argument('--data_dir', type=str, default='../../data/tea_correct', help='data directory')  
+        parser.add_argument('--data_name', type=str, default='dkvmn', help='data set name')
+        parser.add_argument('--load', type=str, default='dkvmn', help='model file to load')
+        parser.add_argument('--save', type=str, default='dkvmn', help='path to save model')    
+        
     if dataset == "synthetic":
         parser.add_argument('--batch_size', type=int, default=32, help='the batch size')
         parser.add_argument('--q_embed_dim', type=int, default=10, help='question embedding dimensions')
