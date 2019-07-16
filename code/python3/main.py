@@ -172,7 +172,7 @@ if __name__ == '__main__':
         parser.add_argument('--maxgradnorm', type=float, default=50.0, help='maximum gradient norm')
         parser.add_argument('--final_fc_dim', type=float, default=50, help='hidden state dim for final fc layer')
 
-        parser.add_argument('--n_question', type=int, default=3413, help='the number of unique questions in the dataset')
+        parser.add_argument('--n_question', type=int, default=3595, help='the number of unique questions in the dataset')
         parser.add_argument('--seqlen', type=int, default=200, help='the allowed maximum length of a sequence')
         parser.add_argument('--data_dir', type=str, default='../../data/tea_correct', help='data directory')  
         parser.add_argument('--data_name', type=str, default='dkvmn', help='data set name')
