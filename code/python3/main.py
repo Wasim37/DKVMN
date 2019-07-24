@@ -26,7 +26,9 @@ def find_file(dir_name, best_epoch):
                 return sub
 
 def load_params(prefix, epoch):
-    save_dict = nd.load('%s-%04d.params' % (prefix, epoch))
+    #save_dict = nd.load('%s-%04d.params' % (prefix, epoch))
+
+    save_dict = nd.load("b32_q50_qa200_m20_std0.1_lr0.05_gn50.0_f50_s224-0160.params")    
     arg_params = {}
     aux_params = {}
     for k, v in save_dict.items():
@@ -152,8 +154,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Script to test KVMN.')
     #parser.add_argument('--gpus', type=str, default='0', help='the gpus will be used, e.g "0,1,2,3"')
     parser.add_argument('--gpus', type=str, default=None, help='the gpus will be used, e.g "0,1,2,3"')
-    parser.add_argument('--max_iter', type=int, default=1, help='number of iterations')
-    parser.add_argument('--test', type=bool, default=False, help='enable testing')
+    parser.add_argument('--max_iter', type=int, default=160, help='number of iterations')
+    parser.add_argument('--test', type=bool, default=True, help='enable testing')
     parser.add_argument('--train_test', type=bool, default=True, help='enable testing')
     parser.add_argument('--show', type=bool, default=True, help='print progress')
 
@@ -172,8 +174,8 @@ if __name__ == '__main__':
         parser.add_argument('--maxgradnorm', type=float, default=50.0, help='maximum gradient norm')
         parser.add_argument('--final_fc_dim', type=float, default=50, help='hidden state dim for final fc layer')
 
-        parser.add_argument('--n_question', type=int, default=3595, help='the number of unique questions in the dataset')
-        parser.add_argument('--seqlen', type=int, default=200, help='the allowed maximum length of a sequence')
+        parser.add_argument('--n_question', type=int, default=1667, help='the number of unique questions in the dataset')
+        parser.add_argument('--seqlen', type=int, default=600, help='the allowed maximum length of a sequence')
         parser.add_argument('--data_dir', type=str, default='../../data/tea_correct', help='data directory')  
         parser.add_argument('--data_name', type=str, default='dkvmn', help='data set name')
         parser.add_argument('--load', type=str, default='dkvmn', help='model file to load')
@@ -307,7 +309,7 @@ if __name__ == '__main__':
         params.memory_value_state_dim = params.qa_embed_dim
         test_data_path = params.data_dir + "/" + params.data_name  +"_test.csv"
         test_q_data, test_qa_data = dat.load_data(test_data_path)
-        best_epoch = 30
+        best_epoch = 160
         file_name = 'b' + str(params.batch_size) + \
                     '_q' + str(params.q_embed_dim) + '_qa' + str(params.qa_embed_dim) + \
                     '_m' + str(params.memory_size) + '_std' + str(params.init_std) + \
