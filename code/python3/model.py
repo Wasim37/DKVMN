@@ -23,6 +23,7 @@ class LogisticRegressionMaskOutput(mx.operator.CustomOp):
         data_grad = (output - label) * (label != self.ignore_label)
         self.assign(in_grad[0], req[0], data_grad)
 
+# 自定义OP https://blog.csdn.net/u011765306/article/details/54562282
 @mx.operator.register("LogisticRegressionMaskOutput")
 class LogisticRegressionMaskOutputProp(mx.operator.CustomOpProp):
     def __init__(self, ignore_label):
@@ -135,4 +136,4 @@ class MODEL(object):
         pred_prob = logistic_regression_mask_output(data=mx.sym.Reshape(pred, shape=(-1, )),
                                                     label=mx.sym.Reshape(data=target, shape=(-1,)),
                                                     ignore_label=-1., name='final_pred')
-        return mx.sym.Group([pred_prob, pred, read_content_embed])
+        return mx.sym.Group([pred_prob, pred, read_content_embed,correlation_weight])

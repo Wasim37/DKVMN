@@ -155,6 +155,18 @@ def test(net, params, q_data, qa_data, label):
         #keys = net.get_params()[0].keys()
         #print(keys)
         
+        #correlation_weight.shape
+        #(32, 20)
+        #net.get_outputs()[2].asnumpy().shape
+        #(19200, 50)
+        #net.get_outputs()[1].asnumpy().shape
+        #(19200, 1)
+        #net.get_outputs()[0].asnumpy().shape
+        #(19200,)        
+        
+        correlation_weight = net.get_outputs()[3].asnumpy()
+        # print(correlation_weight)
+        
         pred = net.get_outputs()[0].asnumpy()
         target = target.asnumpy()
         if (idx + 1) * params.batch_size > seq_num:
