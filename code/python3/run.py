@@ -135,8 +135,8 @@ def test(net, params, q_data, qa_data, label):
         qa_one_seq = qa_data.take(inds, axis=1, mode='wrap')
         #print 'seq_num', seq_num
 
-        input_q = q_one_seq[:, :]  # Shape (seqlen, batch_size)
-        input_qa = qa_one_seq[:, :]  # Shape (seqlen, batch_size)
+        input_q = q_one_seq[:, :]  # Shape (seqlen, batch_size)  (600, 32)
+        input_qa = qa_one_seq[:, :]  # Shape (seqlen, batch_size) (600, 32)
         target = qa_one_seq[:, :]
         #target = target.astype(np.int)
         #target = (target - 1) / params.n_question
@@ -150,6 +150,11 @@ def test(net, params, q_data, qa_data, label):
 
         data_batch = mx.io.DataBatch(data=[input_q, input_qa], label=[])
         net.forward(data_batch, is_train=False)
+        
+        #查看权重
+        #keys = net.get_params()[0].keys()
+        #print(keys)
+        
         pred = net.get_outputs()[0].asnumpy()
         target = target.asnumpy()
         if (idx + 1) * params.batch_size > seq_num:

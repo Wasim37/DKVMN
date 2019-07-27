@@ -135,4 +135,4 @@ class MODEL(object):
         pred_prob = logistic_regression_mask_output(data=mx.sym.Reshape(pred, shape=(-1, )),
                                                     label=mx.sym.Reshape(data=target, shape=(-1,)),
                                                     ignore_label=-1., name='final_pred')
-        return mx.sym.Group([pred_prob])
+        return mx.sym.Group([pred_prob, pred, read_content_embed])
